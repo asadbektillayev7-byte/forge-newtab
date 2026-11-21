@@ -723,4 +723,5 @@
   };
 
   window.FORGE_ART = [days, compound, climb, focus, lissajous, stand, fall, pulse, deeper, path, choices];
+  window.FORGE_KIT = { TAU, clamp, lerp, easeOut, easeInOut, rand, randInt, W, seg, dot, ring, text };
 })();

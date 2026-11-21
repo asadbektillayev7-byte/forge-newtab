@@ -32,6 +32,12 @@ Each section of `quotes.js` answers one of the findings above:
 8. **Body.** The iron, and a body you're not ashamed of.
 9. **Work, money, building.** Answers the economic anxiety: skills, leverage, long games.
 
+## Modern voices
+
+Version 1.1 added the people this age group actually listens to now: Chris Williamson, Alex Hormozi, Sam Altman, Elon Musk, Jensen Huang, Jocko Willink, David Goggins, Naval Ravikant, Mark Manson, Ryan Holiday, Paul Graham, Jeff Bezos and Joe Rogan. Legends were added alongside them too: Napoleon, Churchill, Einstein, Goethe, Sun Tzu, Ali, Jordan, Kobe, Messi, Ronaldo and Pelé.
+
+Wording was checked against the original source where one exists, for example Altman's essay [How To Be Successful](https://blog.samaltman.com/how-to-be-successful) and Hormozi's [Why I Work episode](https://podscripts.co/podcasts/the-game-with-alex-hormozi/why-i-work-ep-351). Williamson's "second best in the world" line comes from his [interview with Ali Abdaal](https://aliabdaal.com/podcast/chris-williamson/). Lines that only appear on quote aggregators with no source were left out.
+
 ## Curation rules
 
 - **Real attribution or "Unknown".** A lot of famous quotes are misattributed, so several were fixed or cut:

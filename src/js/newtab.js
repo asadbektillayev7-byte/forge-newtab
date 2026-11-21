@@ -3,7 +3,7 @@
  * One quote. One piece of line art. Black.
  *
  * Quotes come from a shuffled deck saved in localStorage, so you see every quote
- * once before any repeats. Art never repeats twice in a row.
+ * once before any repeats. The art is picked to fit the quote's theme.
  *
  * Keys (click the page first; the address bar has focus on a new tab):
  *   N, →, Space   next quote + art
@@ -15,15 +15,13 @@
   const QUOTES = window.FORGE_QUOTES || [];
   const ART = window.FORGE_ART || [];
   const KEY_DECK = 'forge.deck.v1';
-  const KEY_ART = 'forge.art.last';
+  const KEY_ART = 'forge.art.recent';
 
   const canvas = document.getElementById('art');
   const ctx = canvas.getContext('2d');
   const quoteEl = document.getElementById('quote');
   const textEl = document.getElementById('quote-text');
   const authorEl = document.getElementById('quote-author');
-  const metaArt = document.getElementById('meta-art');
-  const metaIndex = document.getElementById('meta-index');
   const params = new URLSearchParams(location.search);
   const stillAt = params.has('t') ? Number(params.get('t')) || 0 : null; // debug: ?t=6 renders one frame at 6s
   const reduceMotion = stillAt !== null || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -59,29 +57,36 @@
     return i;
   }
 
-  function nextArt() {
-    const forced = params.get('art');
-    const hit = ART.find((a) => a.id === forced);
-    if (hit) return hit;
-    const last = store.get(KEY_ART);
-    const pool = ART.filter((a) => a.id !== last);
-    const art = pool[Math.floor(Math.random() * pool.length)] || ART[0];
-    store.set(KEY_ART, art.id);
+  // Art that fits the quote's theme, skipping the last few pieces you saw.
+  function nextArt(theme) {
+    const forced = ART.find((a) => a.id === params.get('art'));
+    if (forced) return forced;
+    const recent = Array.isArray(store.get(KEY_ART)) ? store.get(KEY_ART) : [];
+    const fits = ART.filter((a) => a.k.includes(theme));
+    const pools = [
+      fits.filter((a) => !recent.includes(a.id)),
+      fits.filter((a) => a.id !== recent[0]),
+      ART.filter((a) => !recent.includes(a.id)),
+      ART,
+    ];
+    const pool = pools.find((p) => p.length) || ART;
+    const art = pool[Math.floor(Math.random() * pool.length)];
+    store.set(KEY_ART, [art.id, ...recent.filter((id) => id !== art.id)].slice(0, 4));
     return art;
   }
 
   /* ---------- quote ---------- */
 
   function showQuote() {
-    if (!QUOTES.length) return;
+    if (!QUOTES.length) return null;
     const i = nextQuoteIndex();
     const q = QUOTES[i];
     textEl.textContent = `“${q.t}”`;
     authorEl.textContent = q.a ? ` — ${q.a}` : '';
-    metaIndex.textContent = `${String(i + 1).padStart(3, '0')} / ${QUOTES.length}`;
     quoteEl.classList.remove('in');
     void quoteEl.offsetWidth; // restart the fade
     quoteEl.classList.add('in');
+    return q;
   }
 
   /* ---------- art ---------- */
@@ -140,7 +145,6 @@
     piece = newPiece;
     g = geometry();
     state = piece.setup(g);
-    metaArt.textContent = `Fig. ${String(ART.indexOf(piece) + 1).padStart(2, '0')} — ${piece.label}`;
     if (reduceMotion) {
       // settled final frame, no motion
       paint(stillAt ?? 30, 1 / 60);
@@ -151,8 +155,8 @@
   }
 
   function next() {
-    showQuote();
-    run(nextArt());
+    const q = showQuote();
+    run(nextArt(q && q.k));
   }
 
   let resizeTimer = 0;
@@ -174,6 +178,4 @@
   });
 
   next();
-  metaArt.classList.add('in');
-  metaIndex.classList.add('in');
 })();

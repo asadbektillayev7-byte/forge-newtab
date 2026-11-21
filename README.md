@@ -2,25 +2,38 @@
 
 A black new tab. One quote, one shape.
 
-Every new tab gives you a quote picked for guys 18–25: discipline, fear, failure, loneliness, feeling behind, purpose, time. Above it is a piece of white line art that draws itself in. Nothing else. No accounts, no tracking, no network requests.
+Every new tab gives you one of 273 quotes picked for guys 18–25, from Marcus Aurelius, Musashi and Dostoevsky to Goggins, Hormozi, Chris Williamson, Sam Altman and Elon Musk. Above it is a piece of white line art that draws itself in and fits what the quote is about. Nothing else. No accounts, no tracking, no network requests.
 
 ## The art
 
-There are 11 generative pieces. They're picked at random, and you never get the same one twice in a row:
+There are 24 generative pieces. Each quote has a theme (discipline, fear, falling, being seen, comparison, becoming, time, body, building), and the art is picked to fit it. The last few pieces you saw are skipped.
 
-| # | Piece | What it says |
+| Piece | What it says | Shows up with |
 |---|---|---|
-| 01 | **Days** | Every day of this year as a dot. The filled ones are already gone. |
-| 02 | **One percent** | 1.01³⁶⁵ = 37.8 vs 0.99³⁶⁵ = 0.03. Same start, different man. |
-| 03 | **Climb** | An endless staircase with uneven steps. Keep going. |
-| 04 | **Focus** | Everything points at one thing. |
-| 05 | **Rhythm** | One line that loops forever but never draws the same day twice. |
-| 06 | **Stand** | A whole field bends with the wind. One line doesn't. |
-| 07 | **Seven, eight** | It falls seven times, then stands up the eighth. |
-| 08 | **Pulse** | Still here. Still in it. |
-| 09 | **Deeper** | An endless way in. |
-| 10 | **Path** | It was never going to be a straight line. |
-| 11 | **Choices** | Every fork in the road. One path is yours. |
+| **Days** | Every day of this year. The filled ones are gone. | time, discipline |
+| **One percent** | 1.01³⁶⁵ = 37.8 vs 0.99³⁶⁵ = 0.03. | discipline, building, comparison |
+| **Climb** | An endless staircase with uneven steps. | discipline, falling, body |
+| **Focus** | Everything points at one thing. | building, fear, becoming |
+| **Rhythm** | One line that loops forever but never repeats. | seen, time |
+| **Stand** | The field bends with the wind. One doesn't. | comparison, fear, becoming |
+| **Seven, eight** | It falls seven times, then stands up the eighth. | falling, fear |
+| **Pulse** | Still here. Still in it. | seen, body, time |
+| **Deeper** | An endless way in. | seen, becoming |
+| **Path** | It was never going to be a straight line. | comparison, becoming, discipline |
+| **Choices** | Every fork in the road. One path is yours. | becoming, fear, comparison |
+| **Sand** | An hourglass runs out, then turns over. | time |
+| **Drop by drop** | Water carves stone by showing up, not by force. | discipline, body, time |
+| **Brick by brick** | A wall goes up one brick at a time. | building, discipline |
+| **Broken places** | It cracks, and the cracks turn into the strongest lines. | falling, seen |
+| **Again** | The boulder slips twice. The third time it goes over. | falling, discipline, body |
+| **Lighthouse** | Somebody is looking for you. | seen, fear |
+| **Not alone** | Scattered stars, slowly connected. | seen, becoming |
+| **Your lane** | Everyone is running a different race. | comparison |
+| **Leverage** | A small weight in the right place lifts a big one. | building |
+| **Signal** | The noise stays. You stop following it. | building, becoming, seen |
+| **Ripple** | One small act travels further than you think. | fear, becoming |
+| **Roots** | What you see above ground is the small part. | becoming, time, building |
+| **Build** | A structure built one block at a time. | building, discipline |
 
 ## Install
 
@@ -45,7 +58,8 @@ Convert it with Xcode: `xcrun safari-web-extension-converter src`.
 
 ## Make it yours
 
-- **Add or remove quotes:** edit `src/js/quotes.js`. Each entry is `{ t: "text", a: "author" }`.
+- **Add or remove quotes:** edit `src/js/quotes.js`. Each entry is `{ t: "text", a: "author" }`, and goes inside the section for its theme.
+- **Add art:** add a piece to `src/js/art-more.js` and list its themes in `THEMES` at the bottom.
 - **Preview without reloading the extension:** run `node scripts/serve.js` and open `http://localhost:4173/newtab.html`.
   - `?art=days` forces a specific piece.
   - `?t=6` freezes the frame at 6 seconds.
